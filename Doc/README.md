@@ -27,7 +27,7 @@
 
 3. **Xây dựng trực tiếp**  
     - Sử dụng phím tắt <kbd>Command</kbd> + <kbd>Option</kbd> + <kbd>B</kbd> để build.
-    - Với Windows, Sử dụng phím tắt <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>B</kbd>.
+    - Với Windows, sử dụng phím tắt <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>B</kbd>.
 
 4. **Xem PDF**  
 
@@ -35,7 +35,7 @@ Sau khi build thì 1 pdf đã được tạo, bạn có thể mở file xem tr�
 
 ![](./assets/readme.png)
 
-Mở Extension Latex Workshop, trong họp `Commands/View LaTeX PDF`:
+Mở Extension Latex Workshop, trong hộp `Commands/View LaTeX PDF`:
 - View in VSCode tab
 - View in web browser
 
