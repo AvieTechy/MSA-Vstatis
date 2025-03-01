@@ -1,0 +1,219 @@
+\subsubsection{Giới thiệu}
+ 
+Phân biệt cực đại hợp lý (Maximum Likelihood Discrimination - MLD) là một phương pháp phân loại dựa trên nguyên lý xác suất. Ý tưởng chính là ước lượng xác suất để một điểm dữ liệu thuộc về một lớp cụ thể, sau đó gán nhãn cho điểm đó theo lớp có xác suất lớn nhất.  
+
+\subsubsection{Cơ sở toán học}
+Phương pháp này dựa trên các khái niệm xác suất và thống kê, đặc biệt là xác suất tiên nghiệm, xác suất có điều kiện và ước lượng tham số theo nguyên lý hợp lý cực đại (MLE). Để hiểu rõ hơn, trước tiên ta cần xây dựng nền tảng toán học quan trọng.
+
+\textbf{Xác suất tiên nghiệm và xác suất có điều kiện}  \\
+Mỗi lớp dữ liệu $C_k$ có một xác suất tiên nghiệm $P(C_k)$, phản ánh tỷ lệ xuất hiện của lớp đó trong tổng thể dữ liệu. Để xác định lớp của một điểm dữ liệu, ta cần xét xác suất có điều kiện $P(\mathbf{x} | C_k)$. Theo định lý Bayes:
+\begin{equation}\tag{2.2.1}
+P(C_k | \mathbf{x}) = \frac{P(\mathbf{x} | C_k) P(C_k)}{P(\mathbf{x})}
+\end{equation}
+
+với $P(\mathbf{x})$ là xác suất quan sát dữ liệu:
+\begin{equation}\tag{2.2.2}
+P(\mathbf{x}) = \sum_{j} P(\mathbf{x} | C_j) P(C_j)
+\end{equation}
+
+Để quyết định một điểm thuộc về lớp nào, ta chỉ cần so sánh giá trị xác suất hậu nghiệm \( P(C_k | \mathbf{x}) \) cho từng lớp và chọn lớp có xác suất lớn nhất. LDA dựa trên giả định rằng xác suất có điều kiện \( P(\mathbf{x} | C_k) \) tuân theo phân phối chuẩn, giúp đơn giản hóa mô hình và xác định được tiêu chí phân tách tối ưu.
+
+\textbf{Hàm mật độ xác suất}  \\
+Với giả định là dữ liệu trong mỗi lớp tuân theo phân phối chuẩn (Gaussian):
+\begin{equation}\tag{2.2.3}
+P(\mathbf{x} | C_k) = \frac{1}{(2\pi)^{d/2} |\Sigma_k|^{1/2}} \exp\left( -\frac{1}{2} (\mathbf{x} - \mu_k)^T \Sigma_k^{-1} (\mathbf{x} - \mu_k) \right)
+\end{equation}
+trong đó $\mu_k$ là vector trung bình và $\Sigma_k$ là ma trận hiệp phương sai.
+
+Giả định phân phối chuẩn giúp đơn giản hóa bài toán phân loại vì nó cho phép ta mô hình hóa dữ liệu theo một mô hình toán học rõ ràng. Nếu các lớp dữ liệu thực sự tuân theo phân phối chuẩn với cùng một ma trận hiệp phương sai, thì ranh giới phân loại sẽ là một đường thẳng hoặc mặt phẳng (trong không gian nhiều chiều). Điều này giải thích vì sao LDA là một bộ phân loại tuyến tính.
+
+\textbf{Ước lượng hợp lý cực đại (Maximum Likelihood Estimation - MLE)}  \\  
+Trong bài toán phân loại, ta cần ước lượng các tham số của phân phối xác suất \( P(\mathbf{x} | C_k) \) để có thể tính được xác suất hậu nghiệm \( P(C_k | \mathbf{x}) \). Một trong những phương pháp phổ biến nhất để ước lượng tham số là phương pháp hợp lý cực đại (MLE), nhằm tìm các giá trị tham số tối ưu sao cho xác suất quan sát dữ liệu là lớn nhất.
+
+Giả sử dữ liệu trong mỗi lớp \( C_k \) tuân theo phân phối chuẩn \( \mathcal{N}(\mu_k, \Sigma_k) \), ta thực hiện \textbf{Ước lượng tham số của phân phối chuẩn}  
+
+Cho tập dữ liệu \( X = \{ x_1, x_2, ..., x_n \} \) được lấy mẫu từ một phân phối chuẩn một chiều \( \mathcal{N}(\mu, \sigma^2) \), ta cần tìm giá trị ước lượng của các tham số \( \mu \) (trung bình) và \( \sigma \) (độ lệch chuẩn).  
+
+Hàm mật độ xác suất (PDF) của một điểm dữ liệu là:
+
+\begin{equation}
+f(x | \mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+\tag{2.2.4}
+\end{equation}
+
+
+Khi có nhiều quan sát độc lập \( X = \{x_1, x_2, \dots, x_n\} \), hàm hợp lý là tích các xác suất của từng điểm dữ liệu:
+
+\begin{equation}
+L(\mu, \sigma | X) = \prod_{i=1}^{n} f(x_i | \mu, \sigma)
+\tag{2.2.5}
+\end{equation}
+
+
+Thay biểu thức \( f(x | \mu, \sigma) \) vào, ta có:
+
+\begin{equation}
+L(\mu, \sigma | X) = \prod_{i=1}^{n} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x_i - \mu)^2}{2\sigma^2}}
+\tag{2.2.6}
+\end{equation}
+
+Vì việc làm việc với tích nhiều số mũ có thể phức tạp, ta thường lấy log của hàm hợp lý (log-likelihood):
+
+\[
+\log L(\mu, \sigma | X) = \sum_{i=1}^{n} \log \left( \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x_i - \mu)^2}{2\sigma^2}} \right)
+\]
+
+\begin{equation}
+= -\frac{n}{2} \log(2\pi) - n \log(\sigma) - \frac{1}{2\sigma^2} \sum_{i=1}^{n} (x_i - \mu)^2
+\tag{2.2.7}
+\end{equation}
+
+\textit{Tìm ước lượng MLE cho \( \mu \)}  
+
+Lấy đạo hàm của log-likelihood theo \( \mu \):
+
+\[
+\frac{\partial \log L}{\partial \mu} = \frac{1}{\sigma^2} \sum_{i=1}^{n} (x_i - \mu)
+\]
+
+Đặt bằng 0 để tìm giá trị cực đại:
+
+\[
+\sum_{i=1}^{n} (x_i - \mu) = 0
+\]
+
+Suy ra:
+
+\begin{equation}
+\mu_{MLE} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\tag{2.2.8}
+\end{equation}
+
+Như vậy, giá trị ước lượng hợp lý cực đại của \( \mu \) chính là trung bình mẫu.
+
+\textit{Tìm ước lượng MLE cho \( \sigma \)}  
+
+Lấy đạo hàm của log-likelihood theo \( \sigma \):
+
+\[
+\frac{\partial \log L}{\partial \sigma} = -\frac{n}{\sigma} + \frac{1}{\sigma^3} \sum_{i=1}^{n} (x_i - \mu)^2
+\]
+
+Đặt bằng 0:
+
+\[
+-\frac{n}{\sigma} + \frac{1}{\sigma^3} \sum_{i=1}^{n} (x_i - \mu)^2 = 0
+\]
+
+Nhân cả hai vế với \( \sigma^3 \), ta thu được:
+
+\[
+-n\sigma^2 + \sum_{i=1}^{n} (x_i - \mu)^2 = 0
+\]
+
+Suy ra:
+
+\begin{equation}
+\sigma^2_{MLE} = \frac{1}{n} \sum_{i=1}^{n} (x_i - \mu)^2
+\tag{2.2.9}
+\end{equation}
+
+Tức là ước lượng hợp lý cực đại của phương sai là trung bình của bình phương độ lệch so với trung bình mẫu. Điều này khác với ước lượng không chệch của phương sai (dùng mẫu) là \( \frac{1}{n-1} \sum (x_i - \mu)^2 \).
+ 
+Trong LDA, ta cần ước lượng các tham số \( \mu_k \) và \( \Sigma_k \) của từng lớp \( C_k \). Công thức trên cho thấy rằng \( \mu_k \) có thể ước lượng bằng trung bình của các điểm thuộc lớp đó, và \( \Sigma_k \) có thể tính bằng trung bình ma trận hiệp phương sai của từng điểm với trung tâm lớp. Nếu giả định rằng tất cả các lớp có cùng ma trận hiệp phương sai \( \Sigma_k = \Sigma \), ta có thể ước lượng nó bằng cách lấy trung bình của các \( \Sigma_k \). Khi các tham số được ước lượng bằng MLE, ta có thể áp dụng định lý Bayes để tính toán xác suất hậu nghiệm và xác định miền quyết định cho từng điểm dữ liệu.  
+
+
+\subsubsection{Quy tắc Phân biệt cực đại hợp lý}
+
+Trong bài toán phân loại, mục tiêu của phân biệt cực đại hợp lý (Maximum Likelihood Discriminant Rule - MLD) là gán nhãn cho một điểm dữ liệu \( \mathbf{x} \) vào nhóm \( C_k \) sao cho xác suất có điều kiện \( P(\mathbf{x} | C_k) \) đạt giá trị lớn nhất. Điều này đồng nghĩa với việc chọn nhóm có xác suất hậu nghiệm lớn nhất theo định lý Bayes:
+
+\[
+P(C_k | \mathbf{x}) = \frac{P(\mathbf{x} | C_k) P(C_k)}{P(\mathbf{x})}.
+\]
+
+Do \( P(\mathbf{x}) \) là hằng số không phụ thuộc vào nhóm \( C_k \), nên quy tắc phân loại có thể được đơn giản hóa thành:
+
+\begin{equation}
+C^* = \arg\max_{C_k} P(\mathbf{x} | C_k) P(C_k).
+\tag{2.2.10}
+\end{equation}
+
+\textbf{Xác định miền quyết định}
+
+Một điểm dữ liệu \( \mathbf{x} \) sẽ được gán vào nhóm \( C_k \) nếu:
+
+\begin{equation}
+P(\mathbf{x} | C_k) P(C_k) > P(\mathbf{x} | C_j) P(C_j), \quad \forall j \neq k.
+\tag{2.2.11}
+\end{equation}
+
+Nếu giả định mỗi nhóm có phân phối chuẩn với cùng ma trận hiệp phương sai \( \Sigma \), thì tiêu chí phân loại có thể được viết dưới dạng hàm quyết định tuyến tính:
+
+\begin{equation}
+d_k(\mathbf{x}) = \mathbf{x}^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \log P(C_k).
+\tag{2.2.12}
+\end{equation}
+
+Điểm \( \mathbf{x} \) sẽ được gán vào nhóm \( C_k \) nếu \( d_k(\mathbf{x}) > d_j(\mathbf{x}) \) với mọi \( j \neq k \).
+
+\textbf{Xác suất phân loại sai}
+
+Với hai nhóm \( J = 2 \), xác suất phân loại sai có thể được tính như sau:
+
+\[
+p_{21} = P(X \in R_2 | 1) = \int_{R_2} f_1(x) dx.
+\]
+
+\[
+p_{12} = P(X \in R_1 | 2) = \int_{R_1} f_2(x) dx.
+\]
+
+Tổng xác suất phân loại sai được tính bằng:
+
+\begin{equation}
+P_{error} = 1 - \sum_{k} P(C_k) \int_{R_k} P(\mathbf{x} | C_k) d\mathbf{x}.
+\tag{2.2.13}
+\end{equation}
+
+Xác suất phân loại sai phụ thuộc vào độ chồng lấn giữa các phân phối xác suất có điều kiện \( P(\mathbf{x} | C_k) \). Nếu các nhóm có phân phối gần nhau, xác suất phân loại sai sẽ cao hơn.
+
+\textbf{Mở rộng Phân biệt cực đại hợp lý với Chi phí phân loại sai}
+
+Trong nhiều ứng dụng, các lỗi phân loại có thể có chi phí khác nhau. Khi đó, ta sử dụng ma trận chi phí \( C(i|j) \) để biểu diễn chi phí khi phân loại mẫu thuộc nhóm \( C_j \) thành nhóm \( C_i \). Chi phí kỳ vọng được tính bằng:
+
+\begin{equation}
+R(C_i | \mathbf{x}) = \sum_{j} C(i|j) P(C_j | \mathbf{x}).
+\tag{2.2.14}
+\end{equation}
+
+Quy tắc phân loại tối ưu để giảm chi phí kỳ vọng là chọn nhóm \( C_k \) sao cho:
+
+\begin{equation}
+C^* = \arg\min_{C_k} R(C_k | \mathbf{x}).
+\tag{2.2.15}
+\end{equation}
+
+\subsubsection{Ưu điểm \& Nhược điểm của Maximum Likelihood Discrimination (MLD)}
+
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item \textbf{Tính chính xác cao với cỡ mẫu lớn}: Khi số lượng dữ liệu huấn luyện $n$ tăng, MLD đạt được tính không chệch suy rộng và tiệm cận quyết định tối ưu theo tiêu chí Bayes.
+    
+    \item \textbf{Cơ sở toán học vững chắc}: MLD tối đa hóa xác suất hậu nghiệm để ra quyết định phân loại, giúp đảm bảo tính tối ưu thống kê.
+
+    \item \textbf{Áp dụng được cho nhiều loại mô hình xác suất}: Có thể sử dụng với nhiều loại phân phối khác nhau như Gaussian, Bernoulli, Poisson,...
+
+    \item \textbf{Hàm quyết định đơn giản với giả định phù hợp}: Nếu dữ liệu tuân theo phân phối chuẩn với cùng ma trận hiệp phương sai $\Sigma$, giúp giảm chi phí tính toán trong phân loại.
+\end{itemize}
+
+\textbf{Nhược điểm:}
+\begin{itemize}
+    \item \textbf{Phụ thuộc vào giả định phân phối dữ liệu}: Nếu dữ liệu không tuân theo phân phối giả định, hiệu suất của MLD bị suy giảm nghiêm trọng.
+
+    \item \textbf{Độ phức tạp tính toán cao với dữ liệu nhiều chiều}: Khi số chiều của dữ liệu lớn, cần ước lượng ma trận hiệp phương sai $\Sigma$ và nghịch đảo của nó, gây tốn kém về mặt tính toán.
+
+    \item \textbf{Hiệu suất kém với cỡ mẫu nhỏ}: Khi số lượng mẫu nhỏ, ước lượng của MLD có thể bị chệch. Có thể sử dụng các phương pháp như ước lượng Bayes hoặc ước lượng hợp lý cực đại có điều chỉnh (Regularized MLE) để khắc phục.
+
+    \item \textbf{Không phù hợp với phân phối không chính quy}: Nếu dữ liệu có phân phối bất thường hoặc phụ thuộc phi tuyến phức tạp, MLD hoạt động kém hiệu quả so với các phương pháp phi tham số khác.
+\end{itemize}
+
