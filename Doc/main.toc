@@ -16,15 +16,19 @@
 \contentsline {subsubsection}{\numberline {2.2.3}Quy tắc Phân biệt cực đại hợp lý}{9}{subsubsection.2.2.3}%
 \contentsline {subsubsection}{\numberline {2.2.4}Ưu điểm \& Nhược điểm của Maximum Likelihood Discrimination (MLD)}{10}{subsubsection.2.2.4}%
 \contentsline {subsection}{\numberline {2.3}Quy tắc phân biệt Bayes (Bayes Discriminant Rule)}{11}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Quy tắc phân biệt tuyến tính của Fisher (Fisher's Linear Discriminant Rule)}{11}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}So sánh}{11}{subsection.2.5}%
-\contentsline {section}{\numberline {3}Phương pháp: Linear Discriminant Analysis (LDA)}{12}{section.3}%
-\contentsline {subsection}{\numberline {3.1}LDA với hai lớp (Fisher's Discriminant Rule)}{12}{subsection.3.1}%
-\contentsline {subsubsection}{\numberline {3.1.1}Bài toán LDA hai lớp}{12}{subsubsection.3.1.1}%
-\contentsline {subsubsection}{\numberline {3.1.2}Xây dựng hàm mục tiêu}{13}{subsubsection.3.1.2}%
-\contentsline {subsubsection}{\numberline {3.1.3}Bài toán tối ưu hoá}{15}{subsubsection.3.1.3}%
-\contentsline {subsubsection}{\numberline {3.1.4}Phương pháp phân lớp}{17}{subsubsection.3.1.4}%
-\contentsline {subsection}{\numberline {3.2}LDA với đa lớp}{18}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Cài đặt và thực nghiệm}{18}{section.4}%
-\contentsline {section}{\numberline {5}Kết luận và hướng phát triển}{18}{section.5}%
-\contentsline {section}{\numberline {6}Tham khảo}{18}{section.6}%
+\contentsline {subsubsection}{\numberline {2.3.1}Trường hợp 1 biến (1D)}{11}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Trường hợp nhiều biến (d chiều)}{12}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Bayes Discriminant Rules dưới giả định phân phối chuẩn (Normal Distribution)}{12}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.4}Ưu điểm và Nhược điểm của Bayes Discriminant Rules}{13}{subsubsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.4}Quy tắc phân biệt tuyến tính của Fisher (Fisher's Linear Discriminant Rule)}{13}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}So sánh}{13}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Phương pháp: Linear Discriminant Analysis (LDA)}{14}{section.3}%
+\contentsline {subsection}{\numberline {3.1}LDA với hai lớp (Fisher's Discriminant Rule)}{14}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Bài toán LDA hai lớp}{14}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Xây dựng hàm mục tiêu}{15}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}Bài toán tối ưu hoá}{17}{subsubsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.4}Phương pháp phân lớp}{19}{subsubsection.3.1.4}%
+\contentsline {subsection}{\numberline {3.2}LDA với đa lớp}{20}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Cài đặt và thực nghiệm}{20}{section.4}%
+\contentsline {section}{\numberline {5}Kết luận và hướng phát triển}{20}{section.5}%
+\contentsline {section}{\numberline {6}Tham khảo}{20}{section.6}%

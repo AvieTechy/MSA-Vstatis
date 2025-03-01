@@ -289,6 +289,210 @@ Discriminant)}\label{phuxe2n-biux1ec7t-cux1ef1c-ux111ux1ea1i-hux1ee3p-luxfd-maxi
 \subsection{Quy tắc phân biệt Bayes (Bayes Discriminant
 Rule)}\label{quy-tux1eafc-phuxe2n-biux1ec7t-bayes-bayes-discriminant-rule}
 
+Giả sử ta có \(k\) lớp (nhãn)
+\(\omega_1, \omega_2, \omega_3, \dots, \omega_k\). Mỗi quan sát/mẫu
+(trong không gian một chiều hay nhiều chiều) được biểu diễn bởi vectơ
+\(\mathbf{x} \in \mathbb{R}^d\). Ta muốn gán \(\mathbf{x}\) vào một
+trong các lớp \(\omega_i\).
+
+\begin{itemize}
+\tightlist
+\item
+  Tiên nghiệm (Priori Probability): Ký hiệu \(P(\omega_i)\) là xác suất
+  tiên nghiệm (trước khi biết \(\mathbf{x}\)) của lớp \(\omega_i\).
+\item
+  Mật độ có điều kiện (Class-Conditional Density): \(f_i(\mathbf{x})\)
+  hay \(P(\mathbf{x} \mid \omega_i)\) là hàm mật độ xác suất của
+  \(\mathbf{x}\) khi \(\mathbf{x}\) thuộc lớp \(\omega_i\).
+\end{itemize}
+
+Khi có một quan sát mới \(\mathbf{x}\), quy tắc Bayes yêu cầu tính xác
+suất hậu nghiệm (Posterior Probability) \(P(\omega_i \mid \mathbf{x})\)
+và chọn lớp có xác suất hậu nghiệm lớn nhất: \[\hat{\omega}(\mathbf{x})
+= \arg\max_{\omega_i} \, P(\omega_i \mid \mathbf{x})\]
+
+Trong đó, xác suất hậu nghiệm có nghĩa là xác suất của một sự kiện xảy
+ra sau khi đã có thông tin hoặc bằng chứng mới. Xác suất hậu nghiệm được
+tính dựa trên định lý Bayes, giúp cập nhật xác suất ban đầu khi có dữ
+kiện mới: \[P(\omega_i \mid x)
+= \frac{p(x \mid \omega_i)\,P(\omega_i)}
+       {\sum_{j} p(x \mid \omega_j)\,P(\omega_j)}\]
+
+Vì \(p(x)\) là hằng số với mọi lớp, nên quy tắc Bayes có thể viết đơn
+giản là: \[\hat{\omega}(x)
+= \arg\max_{\omega_i} \bigl[p(x \mid \omega_i)\,P(\omega_i)\bigr]\]
+
+Khi mục tiêu là tối thiểu hóa xác suất sai phân lớp (minimize
+probability of misclassification) và giả sử chi phí sai phân lớp (ECM --
+Expected Cost of Misclassification) bằng nhau cho mọi lớp, quy tắc trên
+là tối ưu về mặt lý thuyết.
+
+\subsubsection{Trường hợp 1 biến
+(1D)}\label{trux1b0ux1eddng-hux1ee3p-1-biux1ebfn-1d}
+
+\begin{itemize}
+\tightlist
+\item
+  \(X\) suy giảm thành \(x \in \mathbb{R}\).
+\item
+  Tiên nghiệm: \(P(\omega)\).
+\item
+  Hàm mật độ có điều kiện: \(P(x \mid \omega)\).
+\end{itemize}
+
+Khi có mẫu mới \(x\), ta so sánh
+\[p\bigl(x \mid \omega_i\bigr)\,P(\omega_i)
+\quad \text{với} \quad
+p\bigl(x \mid \omega_j\bigr)\,P(\omega_j)
+\quad \forall\, i, j.\] Và quyết định \(x\) thuộc về lớp \(\omega_i\)
+nếu \[p\bigl(x \mid \omega_i\bigr)\,P(\omega_i)
+\;>\;
+p\bigl(x \mid \omega_j\bigr)\,P(\omega_j)
+\quad \text{cho mọi } j \neq i.\]
+
+\subsubsection{Trường hợp nhiều biến (d
+chiều)}\label{trux1b0ux1eddng-hux1ee3p-nhiux1ec1u-biux1ebfn-d-chiux1ec1u}
+
+\begin{itemize}
+\tightlist
+\item
+  X thuộc \(\mathbb{R}^d\).
+\item
+  Tương tự ta tính \(p(x \mid \omega_i) \, P(\omega_i)\).
+\item
+  Và chọn lớp có giá trị lớn nhất. Thường để thuận tiện, ta sử dụng hàm
+  phân biệt (discrimination function)
+  \(\ln\!\bigl(p(x \mid w_i)\,P(w_i)\bigr)\):
+\end{itemize}
+
+Nếu coi:
+\[\delta_i(x) = \ln\bigl(p(x \mid \omega_i)\bigr) + \ln\bigl(P(\omega_i)\bigr)\]
+
+thì quy tắc quyết định: \[\hat{\omega}(x)
+= \arg\max_{\omega_i} \,\delta_i(x)\]
+
+\subsubsection{Bayes Discriminant Rules dưới giả định phân phối chuẩn
+(Normal
+Distribution)}\label{bayes-discriminant-rules-dux1b0ux1edbi-giux1ea3-ux111ux1ecbnh-phuxe2n-phux1ed1i-chuux1ea9n-normal-distribution}
+
+Trong thực tế, thường giả định mỗi lớp \(\omega_i\) tuân theo phân phối
+chuẩn nhiều chiều (Multivariate Normal, hay Gaussian) với trung bình
+\(\mu_i\) và ma trận hiệp phương sai \(\Sigma_i\). Khi đó: \[
+p(x|w_i) = \frac{1}{(2\pi)^{d/2} |\Sigma_i|^{1/2}} \exp\left(-\frac{1}{2}(x-\mu_i)^T \Sigma_i^{-1} (x-\mu_i)\right)
+\]
+
+Tương ứng, hàm phân biệt có dạng: \[\delta_i(x)
+= \ln p(x \mid \omega_i)
+  + \ln P(\omega_i)
+= -\tfrac{1}{2} \ln \lvert \Sigma_i \rvert
+  - \tfrac{1}{2} (x - \mu_i)^\top \Sigma_i^{-1} (x - \mu_i)
+  + \ln P(\omega_i)
+  + \text{(hằng số)}.\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Cả lớp có cùng ma trận hiệp phương sai}
+\end{enumerate}
+
+Khi ma trận\(\Sigma_i = \Sigma\) cho mọi \(i\), hàm phân biệt trở nên:
+\[\delta_i(x) 
+  = x^\top \Sigma^{-1} \mu_i 
+    - \tfrac{1}{2} \mu_i^\top \Sigma^{-1} \mu_i 
+    + \ln P(\omega_i) 
+    \quad (\text{hằng số độc lập với } i)\]
+
+Quy tắc quyết định: \[\hat{\omega}(x) = \arg\max_i \, \delta_i(x).\]
+
+Khi đó, biên phân lớp (decision boundary) giữa \(\omega_i\) và
+\(\omega_j\) là tuyến tính trong x. Ta có Linear Discriminant Analysis
+(LDA) trong Bayes.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Mỗi lớp có ma trận hiệp phương sai riêng (khác nhau)}
+\end{enumerate}
+
+Hàm phân biệt: \[\delta_i(x) 
+  = -\frac{1}{2} \ln \lvert \Sigma_i \rvert 
+    - \frac{1}{2} (x - \mu_i)^\top \Sigma_i^{-1} (x - \mu_i) 
+    + \ln P(\omega_i)\]
+
+Khi đó, biên phân lớp có thể là bậc hai (quadratic) do sự xuất hiện của
+\(\Sigma_i^{-1}\). Ta có Quadratic Discriminant Analysis (QDA).
+
+\subsubsection{Ưu điểm và Nhược điểm của Bayes Discriminant
+Rules}\label{ux1b0u-ux111iux1ec3m-vuxe0-nhux1b0ux1ee3c-ux111iux1ec3m-cux1ee7a-bayes-discriminant-rules}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Ưu điểm:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Tối ưu hóa xác suất sai nếu các giả định về phân phối và xác suất
+    tiên nghiệm là chính xác.
+  \item
+    Dễ cài đặt với các phân phối có dạng xác định (đặc biệt là phân phối
+    Gaussian).
+  \end{itemize}
+\item
+  \textbf{Nhược điểm:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Phụ thuộc vào ước lượng chính xác của phân phối.
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Nếu mô hình phân phối \(p(x|w_i)\) sai, chất lượng phân lớp sẽ bị
+      ảnh hưởng.
+    \end{itemize}
+  \item
+    Phải biết hoặc ước lượng prior \(P(w_i)\).
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Nếu priors không chính xác, kết quả có thể sai lệch.
+    \end{itemize}
+  \item
+    Kém hiệu quả trong không gian đa chiều (High-dimensional Data) với
+    số lượng mẫu nhỏ.
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Việc ước lượng đầy đủ ma trận hiệp phương sai cho từng lớp
+      (\(\Sigma_i\)) dễ bị nhiễu.
+    \end{itemize}
+  \item
+    Nhạy cảm với nhiễu.
+  \end{itemize}
+\item
+  \textbf{Yêu cầu để có thể ứng dụng Bayes Discriminant Rule:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Biết trước phân phối \(P(X|i)\).
+  \item
+    Có được priors \(P(w_i)\) là xác suất tiên nghiệm phản ánh đúng tần
+    suất hay xác suất xuất hiện của lớp.
+  \item
+    Hiểu rõ chi phí phương sai cho các loại nhầm lẫn (nếu chi phí bất
+    đối xứng).
+  \end{itemize}
+\end{itemize}
+
 \subsection{Quy tắc phân biệt tuyến tính của Fisher (Fisher's Linear
 Discriminant
 Rule)}\label{quy-tux1eafc-phuxe2n-biux1ec7t-tuyux1ebfn-tuxednh-cux1ee7a-fisher-fishers-linear-discriminant-rule}
