@@ -1,5 +1,9 @@
 # LaTeX in VS Code
 
+Ref: [Setup for Windows tutorial](https://youtu.be/4lyHIQl4VM8?si=COvRyPyoKxCJ2Fpl)
+
+> Các bạn sài Linux/MacOs có thể follow theo bên dưới.  
+
 ## Chuẩn bị
 
 1. **LaTeX Workshop**  
@@ -12,6 +16,12 @@
     MiKTeX là một hệ thống phân phối TeX, cung cấp tất cả các công cụ cần thiết để biên dịch tài liệu LaTeX. Có thể tải MiKTeX từ trang web chính thức theo liên kết dưới đây:
 
     [https://miktex.org/download](https://miktex.org/download)
+
+3. **Strawberry Perl**
+
+    Strawberry Perl là một bản phân phối Perl cho Windows, giúp chạy các script Perl và cần thiết cho một số công cụ LaTeX. Tải Strawberry Perl từ trang web chính thức theo liên kết dưới đây:
+
+    [http://strawberryperl.com/](http://strawberryperl.com/)
 
 ---
 
@@ -39,12 +49,14 @@ Mở Extension Latex Workshop, trong hộp `Commands/View LaTeX PDF`:
 - View in VSCode tab
 - View in web browser
 
-1. Các lỗi có thể mắc phải
+5. Các lỗi có thể mắc phải
 
 Do source code LaTeX trong project này có sử dụng package hỗ trợ tiếng việt `vntex`. Nhưng buồn thay package này lại không có sẵn trong MiKTeX, nên bắt buộc phải tải thêm thông qua cú pháp:
 
 ```bash
-tlmgr install package
+tlmgr install vntex 
+# or
+mpm --install vntex 
 ```
 
 > Note: Lưu ý đảm bảo khi tải package terminal phải được run as administrator. Tham khảo [Permission problem when installing package from tlmgr](https://tex.stackexchange.com/questions/187073/permission-problem-when-installing-package-from-tlmgr) để có thể khắc phục.
