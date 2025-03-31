@@ -1,0 +1,5 @@
+#1
+https://github.com/xbeat/Machine-Learning/blob/main/Building%20a%20Linear%20Discriminant%20Analysis%20(LDA)%20Algorithm%20from%20Scratch%20in%20Python.md
+
+#2
+https://github.com/saifuddin778/LDA
